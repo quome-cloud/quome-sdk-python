@@ -16,6 +16,9 @@ dependencies = ["httpx>=0.27"]
 ws = ["websockets>=12"]
 dev = ["pytest", "pytest-asyncio", "respx", "mypy", "ruff"]
 
+[project.scripts]
+quome-workflow = "quome.cli:main"
+
 [project.urls]
 Homepage = "https://quome.studio"
 Repository = "https://github.com/quome-cloud/quome-sdk-python"

@@ -150,6 +150,28 @@ map to typed subclasses of `quome.QuomeAPIError`:
 None of these ever carry the API key — only HTTP status codes and
 server-provided detail strings.
 
+## Workflows
+
+`quome-workflow workflow run` runs a [DOH](https://github.com/quome-cloud/doh) workflow spec in a
+fresh sandbox: create, ship the spec + inputs, run detached, poll, copy `result.json` and artifacts
+to `--out`, then always delete the sandbox. (`quome workflow ...` becomes available if the script is
+renamed once the old Rust CLI is retired.)
+
+```bash
+# build the runner package once, from a DOH checkout
+tar czf doh_flow.tar.gz -C bin/lib doh_flow event_watcher_template.py
+
+export QUOME_API_KEY=...            # plus CLAUDE_CODE_OAUTH_TOKEN, or `claude` login
+quome-workflow workflow ensure-template --name claude-workflow-runner --image <image>
+quome-workflow workflow templates
+quome-workflow workflow run ./my-workflow --inputs '{"k": "v"}' --out ./out \
+    [--runner-tarball ./doh_flow.tar.gz] [--secret NAME=ORG_SECRET_ID] [--keep-on-failure]
+```
+
+Exit codes: 0 completed, 1 run failed/timed out, 2 usage/not found, 3 missing API key or Claude token,
+4 provisioning/bootstrap failure, 5 teardown failed (sandbox id printed). The Claude token is passed
+only as process `env=` and never logged; secrets are injected by org-secret id, never by value.
+
 ## API stability
 
 The SDK wraps a specific, documented subset of the Quome REST API (sandbox
