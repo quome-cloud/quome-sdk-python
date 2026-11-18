@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/quome-cloud/quome-sdk-python/main/assets/quome-sdk-python-logo-dark.svg">
+    <img src="https://raw.githubusercontent.com/quome-cloud/quome-sdk-python/main/assets/quome-sdk-python-logo-light.svg" alt="Quome SDK" width="520"/>
+  </picture>
+</p>
+
 # quome
 
 The official Python SDK for [Quome](https://quome.studio) sandboxes — isolated,
